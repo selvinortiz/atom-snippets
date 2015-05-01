@@ -1,0 +1,251 @@
+# Atom Snippets
+# Lovinly crafted for the sake of productivity=)
+#
+# @author    Selvin Ortiz <selvin@selv.in>
+# @copyright 2015 Selvin Ortiz
+#
+#
+# class.make
+#
+#
+'.text.html.php':
+	'Class : Make':
+		'prefix': 'class.make'
+		'body': """
+<?php
+namespace Craft;
+
+/**
+ * Class ${1:ClassName}
+ *
+ * @package Craft
+ * @author  ${2:Selvin Ortiz}
+ */
+class ${1:ClassName} extends ${4:ParentClass}
+{
+	$0
+}
+	"""
+#
+#
+# plugin.make
+#
+#
+	'Plugin : Make':
+		'prefix': 'plugin.make'
+		'body': """
+<?php
+namespace Craft;
+
+/**
+ * Class ${1:PluginName}Plugin
+ *
+ * @package Craft
+ * @author  ${2:Selvin Ortiz}
+ */
+class ${1:PluginName}Plugin extends BasePlugin
+{
+	/**
+	 * Good place to load dependencies and perform initialization tasks
+	 */
+	public function init()
+	{
+		parent::init();$0
+	}
+
+	/**
+	 * Returns the translateable plugin name
+	 *
+	 * @returns string
+	 */
+	public function getName()
+	{
+		return Craft::t('${4:$1}');
+	}
+
+	/**
+	 * Returns the semver formatted plugin version
+	 *
+	 * @returns string
+	 */
+	public function getVersion()
+	{
+		return Craft::t('${5:0.1.0}');
+	}
+
+	/**
+	 * Returns the name of the developer responsible for this awesome plugin
+	 *
+	 * @returns string
+	 */
+	public function getDeveloper()
+	{
+		return '${2:Selvin Ortiz}';
+	}
+
+	/**
+	 * Returns the URL where the developer of this plugin can be found
+	 *
+	 * @returns string
+	 */
+	public function getDeveloperUrl()
+	{
+		return '${7:https://selv.in}';
+	}
+}
+
+
+/**
+ * Optimized way of fetching the main service and properly type hinting it
+ *
+ * @return ${8:$1}Service
+ */
+function ${9:$1}()
+{
+	static $service;
+
+	if ($service === null)
+	{
+		$service = Craft::app()->getComponent('${10:$1}');
+	}
+}
+		"""
+#
+#
+# plugin.settings
+#
+#
+	'Plugin : Settings':
+		'prefix': 'plugin.settings'
+		'body': """
+	/**
+	 * Defines the plugin settings to be managed by craft
+	 *
+	 * @see getSettings()
+	 *
+	 * @returns array
+	 */
+	public function defineSettings()
+	{
+		return array(
+			'${1:key}' => array(AttributeType::${2:String}),
+		);
+	}$0
+		"""
+#
+#
+# plugin.configs
+#
+#
+	'Plugin : Configs':
+		'prefix': 'plugin.configs'
+		'body': """
+	/**
+	 * Returns a settings model populated by db settings and file configs
+	 *
+	 * @example
+	 * plugins/pluginname/config.php
+	 *
+	 * return array(
+	 * 	'settings' => array(
+	 * 		'key' => 'value'
+	 * 	)
+	 * );
+	 *
+	 * @returns BaseModel
+	 */
+	public function getSettings()
+	{
+		$config = craft()->config->get('settings', '${1:pluginHandle}')
+
+		if (is_array($configs) && !empty($configs))
+		{
+			$settings = parent::getSettings();
+
+			$settings->setAttributes(array_merge($settings->getAttributes(), $configs));
+
+			return $settings;
+		}
+
+		return parent::getSettings();
+	}
+
+	/**
+	 * Defines the plugin settings to be managed by craft
+	 *
+	 * @see getSettings()
+	 *
+	 * @returns array
+	 */
+	public function defineSettings()
+	{
+		return array(
+			'${2:key}' => array(AttributeType::${3:String}),
+		);
+	}$0
+		"""
+#
+#
+# controller.make
+#
+#
+	'Controller : Make':
+		'prefix': 'controller.make'
+		'body': """
+<?php
+namespace Craft;
+
+/**
+ * Class ${1:PluginName}Controller
+ *
+ * @package Craft
+ * @author  ${2:Selvin Ortiz}
+ */
+class ${1:PluginName}Controller extends BaseController
+{
+	/**
+	 * Defines which actions can be reached without being logged in
+	 *
+	 * @example
+	 * false               - No actions
+	 * true                - All actions
+	 * array('actionName') - Only actionName
+	 *
+	 * @var bool|array
+	 */
+	protected $allowAnonymous = ${3:false;}
+
+	public function action${4:Name}()
+	{
+		$0
+	}
+}
+		"""
+#
+#
+# service.make
+#
+#
+	'Service : Make':
+		'prefix': 'service.make'
+		'body': """
+<?php
+namespace Craft;
+
+/**
+ * Class ${1:PluginName}Service
+ *
+ * @package Craft
+ * @author  ${2:Selvin Ortiz}
+ */
+class ${1:PluginName}Service extends BaseApplicationComponent
+{
+	/**
+	 * Good place to initialize your component instead of using __construct()
+	 */
+	public function init()
+	{
+		parent::init();$0
+	}
+}
+	"""
